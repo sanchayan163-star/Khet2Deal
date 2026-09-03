@@ -1,0 +1,439 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: white;
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0, 35, 30, 0.72), rgba(0, 20, 18, 0.88)),
+        url("https://images.unsplash.com/photo-1500382017468-9049fed747ef")
+        center/cover fixed;
+}
+
+/* Header */
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 28px 6%;
+    z-index: 5;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 42px;
+}
+
+.logo h2 {
+    font-size: 27px;
+}
+
+.logo h2 span,
+.hero-content h2 span {
+    color: #8edb4f;
+}
+
+.logo p {
+    font-size: 12px;
+    color: #c8d8d2;
+}
+
+
+/* Hero */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 110px 20px 50px;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.hero-content h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.hero-content h2 {
+    font-size: 48px;
+    color: #8edb4f;
+    margin-bottom: 8px;
+}
+
+.tagline {
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+.choose-text {
+    font-size: 16px;
+    color: #d7e5df;
+    margin-bottom: 25px;
+}
+
+
+/* Role Cards */
+
+.role-container {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+}
+
+.role-card {
+    width: 290px;
+    min-height: 330px;
+    padding: 28px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.role-card:hover {
+    transform: translateY(-8px);
+}
+
+.farmer-card {
+    border: 1px solid rgba(120, 230, 70, 0.5);
+    background: rgba(20, 100, 45, 0.30);
+}
+
+.buyer-card {
+    border: 1px solid rgba(40, 150, 255, 0.55);
+    background: rgba(10, 65, 110, 0.32);
+}
+
+.role-icon {
+    width: 65px;
+    height: 65px;
+    margin: auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.role-card h3 {
+    font-size: 25px;
+    margin: 18px 0 10px;
+}
+
+.farmer-card h3 {
+    color: #b5ed68;
+}
+
+.buyer-card h3 {
+    color: #72c8ff;
+}
+
+.role-card p {
+    line-height: 1.6;
+    color: #e0e9e5;
+    margin-bottom: 22px;
+}
+
+.role-card button {
+    width: 100%;
+    border: none;
+    border-radius: 9px;
+    padding: 13px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.farmer-card button {
+    background: #328d38;
+}
+
+.buyer-card button {
+    background: #087bc5;
+}
+
+.role-card button:hover {
+    transform: scale(1.03);
+    filter: brightness(1.15);
+}
+
+
+/* Bottom */
+
+.bottom-text {
+    margin-top: 35px;
+    line-height: 1.5;
+    color: #d4dfdb;
+}
+
+.features {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    color: #d7e8df;
+    font-size: 14px;
+}
+
+
+/* AI Button */
+
+.ai-button {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    width: 65px;
+    height: 65px;
+    border: none;
+    border-radius: 50%;
+    background: #61b83f;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    z-index: 20;
+    transition: 0.3s;
+}
+
+.ai-button:hover {
+    transform: scale(1.1);
+}
+
+
+/* Chatbot */
+
+.chatbot {
+    position: fixed;
+    right: 28px;
+    bottom: 105px;
+    width: 360px;
+    height: 520px;
+    background: #09231f;
+    border: 1px solid rgba(130, 220, 90, 0.5);
+    border-radius: 18px;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    z-index: 19;
+}
+
+.chat-header {
+    padding: 17px;
+    display: flex;
+    justify-content: space-between;
+    background: #0d342d;
+}
+
+.chat-header strong {
+    display: block;
+}
+
+.chat-header small {
+    color: #9fb9b1;
+}
+
+.chat-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.chat-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.bot-message {
+    background: #123b33;
+    padding: 13px;
+    border-radius: 12px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.ai-options {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.ai-options button {
+    padding: 11px;
+    border: 1px solid #377f55;
+    border-radius: 9px;
+    background: #10352e;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+}
+
+.ai-options button:hover {
+    background: #1a4c40;
+}
+
+.chat-input {
+    display: flex;
+    padding: 12px;
+    gap: 8px;
+    background: #0d342d;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+}
+
+.chat-input button {
+    width: 45px;
+    border: none;
+    border-radius: 8px;
+    background: #55a83b;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* Login Modal */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+}
+
+.modal-content {
+    width: 360px;
+    padding: 30px;
+    background: #09231f;
+    border: 1px solid #4e9e52;
+    border-radius: 18px;
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #a8e86c;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #398f3f;
+    color: white;
+    cursor: pointer;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    border: none;
+    background: none;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+#loginMessage {
+    margin-top: 15px;
+    text-align: center;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .header {
+        padding: 18px 20px;
+    }
+
+    .logo-icon {
+        font-size: 32px;
+    }
+
+    .logo h2 {
+        font-size: 22px;
+    }
+
+    .hero {
+        padding-top: 100px;
+    }
+
+    .hero-content h1 {
+        font-size: 23px;
+    }
+
+    .hero-content h2 {
+        font-size: 38px;
+    }
+
+    .role-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .role-card {
+        width: 310px;
+        min-height: 280px;
+        padding: 22px;
+    }
+
+    .features {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .chatbot {
+        right: 10px;
+        bottom: 90px;
+        width: calc(100% - 20px);
+        height: 500px;
+    }
+
+    .ai-button {
+        right: 18px;
+        bottom: 18px;
+    }
+}

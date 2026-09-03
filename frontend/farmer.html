@@ -1,0 +1,3597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Farmer Dashboard - Khet2Deal</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* =========================================================
+   Khet2Deal - FUTURISTIC FARMER DASHBOARD
+========================================================= */
+
+:root {
+    --green-50: #effff4;
+    --green-100: #d9ffe6;
+    --green-200: #b7ffc9;
+    --green-300: #79ff9c;
+    --green-400: #38f56c;
+    --green-500: #18d957;
+    --green-600: #0caf45;
+    --green-700: #078238;
+
+    --dark-950: #03100a;
+    --dark-900: #06170e;
+    --dark-850: #081d12;
+    --dark-800: #0b2416;
+    --dark-750: #0e2d1b;
+
+    --text-main: #f2fff6;
+    --text-soft: #a9cbb5;
+    --text-muted: #71927d;
+
+    --border: rgba(87, 255, 133, 0.16);
+    --border-strong: rgba(87, 255, 133, 0.32);
+
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    --green-glow: 0 0 30px rgba(24, 217, 87, 0.18);
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    color: var(--text-main);
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(24, 217, 87, 0.13),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(56, 245, 108, 0.08),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(7, 130, 56, 0.12),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #020a06 0%,
+            #06170e 45%,
+            #03100a 100%
+        );
+
+    overflow-x: hidden;
+}
+
+/* futuristic background grid */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(75, 255, 120, 0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(75, 255, 120, 0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,1),
+        rgba(0,0,0,0.2)
+    );
+
+    z-index: -1;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 34px;
+
+    background: rgba(3, 16, 10, 0.78);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.22);
+
+    z-index: 100;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 22px;
+    font-weight: 800;
+
+    letter-spacing: 0.4px;
+
+    color: #dffff0;
+
+    text-shadow:
+        0 0 15px rgba(56, 245, 108, 0.4);
+}
+
+.logo::after {
+    content: "FARMER";
+
+    font-size: 9px;
+    letter-spacing: 2px;
+
+    color: var(--green-400);
+
+    padding: 4px 7px;
+
+    border: 1px solid var(--border-strong);
+    border-radius: 20px;
+
+    background: rgba(24, 217, 87, 0.07);
+}
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.logout-btn {
+    position: static;
+
+    background: rgba(255, 70, 70, 0.08);
+
+    color: #ff9d9d;
+
+    border: 1px solid rgba(255, 80, 80, 0.25);
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 70, 70, 0.16);
+
+    border-color: rgba(255, 80, 80, 0.5);
+
+    color: #ffd0d0;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 0 20px rgba(255, 60, 60, 0.12);
+}
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.dashboard-container {
+    width: min(1150px, calc(100% - 30px));
+
+    margin: 105px auto 60px;
+
+    padding: 10px;
+}
+
+/* =========================================================
+   DASHBOARD HEADER
+========================================================= */
+
+.dashboard-header {
+    position: relative;
+
+    margin-bottom: 28px;
+
+    padding: 28px 30px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16, 48, 28, 0.82),
+            rgba(5, 24, 14, 0.86)
+        );
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+}
+
+.dashboard-header::before {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    right: -70px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(56, 245, 108, 0.09);
+
+    filter: blur(5px);
+}
+
+.dashboard-header::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 180px;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green-400),
+            transparent
+        );
+
+    box-shadow:
+        0 0 15px var(--green-400);
+}
+
+.dashboard-header h1 {
+    position: relative;
+
+    margin: 0 0 8px;
+
+    font-size: clamp(25px, 4vw, 36px);
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    color: #effff4;
+}
+
+.dashboard-header h1 span {
+    color: var(--green-400);
+
+    text-shadow:
+        0 0 20px rgba(56, 245, 108, 0.35);
+}
+
+.dashboard-header p {
+    position: relative;
+
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 15px;
+}
+
+/* =========================================================
+   COMMON SECTION CARD
+========================================================= */
+
+.add-crop-box,
+.my-crops,
+.buy-requests,
+.my-orders,
+.buyer-recommendation {
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12, 39, 23, 0.88),
+            rgba(5, 22, 13, 0.94)
+        );
+
+    padding: 26px;
+
+    border-radius: 18px;
+
+    margin-bottom: 25px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+}
+
+.add-crop-box::before,
+.my-crops::before,
+.buy-requests::before,
+.my-orders::before,
+.buyer-recommendation::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(56, 245, 108, 0.6),
+            transparent
+        );
+}
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.add-crop-box h2,
+.my-crops h2,
+.buy-requests h2,
+.my-orders h2,
+.buyer-recommendation h2 {
+
+    margin: 0 0 20px;
+
+    color: #eafff0;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.1px;
+}
+
+.add-crop-box h2::first-letter,
+.my-crops h2::first-letter,
+.buy-requests h2::first-letter,
+.my-orders h2::first-letter,
+.buyer-recommendation h2::first-letter {
+    filter:
+        drop-shadow(
+            0 0 8px rgba(56, 245, 108, 0.5)
+        );
+}
+
+/* =========================================================
+   CROP FORM
+========================================================= */
+
+.crop-form {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.crop-form input,
+.crop-form select,
+.crop-form textarea {
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    color: #eafff0;
+
+    background:
+        rgba(1, 13, 7, 0.72);
+
+    border: 1px solid rgba(87, 255, 133, 0.16);
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.25s ease;
+}
+
+.crop-form input::placeholder,
+.crop-form textarea::placeholder {
+    color: #62806d;
+}
+
+.crop-form select {
+    cursor: pointer;
+}
+
+.crop-form select option {
+    background: #0a2114;
+    color: white;
+}
+
+.crop-form input:hover,
+.crop-form select:hover,
+.crop-form textarea:hover {
+
+    border-color:
+        rgba(87, 255, 133, 0.32);
+}
+
+.crop-form input:focus,
+.crop-form select:focus,
+.crop-form textarea:focus {
+
+    border-color:
+        var(--green-400);
+
+    box-shadow:
+        0 0 0 3px rgba(56, 245, 108, 0.08),
+        0 0 20px rgba(56, 245, 108, 0.08);
+}
+
+.crop-form input[type="file"] {
+
+    color: var(--text-soft);
+
+    background:
+        rgba(7, 35, 19, 0.7);
+
+    cursor: pointer;
+}
+
+.crop-form input[type="file"]::file-selector-button {
+
+    border: none;
+
+    padding: 8px 12px;
+
+    margin-right: 10px;
+
+    border-radius: 7px;
+
+    background:
+        rgba(56, 245, 108, 0.13);
+
+    color: var(--green-300);
+
+    cursor: pointer;
+
+    font-weight: 700;
+}
+
+.crop-form textarea {
+
+    grid-column: 1 / -1;
+
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.crop-form button {
+
+    grid-column: 1 / -1;
+
+    padding: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #18d957,
+            #079b3f
+        );
+
+    color: #021208;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(24, 217, 87, 0.18);
+
+    transition: 0.25s ease;
+}
+
+.crop-form button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 32px rgba(24, 217, 87, 0.28);
+
+    filter: brightness(1.08);
+}
+
+.crop-form button:disabled {
+
+    background: #34513e;
+
+    color: #91a79a;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+.file-info {
+
+    grid-column: 1 / -1;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+
+    margin-top: -5px;
+}
+
+.message {
+
+    margin-top: 15px;
+
+    padding: 10px 13px;
+
+    border-radius: 9px;
+
+    color: var(--green-300);
+
+    background:
+        rgba(56, 245, 108, 0.06);
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   CROP / REQUEST / ORDER CARD
+========================================================= */
+
+.crop-card,
+.request-card,
+.order-card {
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 48, 28, 0.65),
+            rgba(5, 25, 14, 0.72)
+        );
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    margin-bottom: 15px;
+
+    border: 1px solid rgba(87, 255, 133, 0.11);
+
+    border-left:
+        3px solid var(--green-500);
+
+    transition: 0.25s ease;
+}
+
+.crop-card:hover,
+.request-card:hover,
+.order-card:hover {
+
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(87, 255, 133, 0.24);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.crop-card h3,
+.request-card h3,
+.order-card h3 {
+
+    color: var(--green-300);
+
+    margin-top: 0;
+
+    margin-bottom: 14px;
+
+    font-size: 18px;
+}
+
+.crop-card p,
+.request-card p,
+.order-card p {
+
+    margin: 8px 0;
+
+    color: #abc8b4;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.crop-card p strong,
+.request-card p strong,
+.order-card p strong {
+
+    color: #e1f8e8;
+}
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.crop-image-preview {
+
+    display: block;
+
+    width: 180px;
+    height: 145px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    margin-top: 14px;
+
+    border:
+        1px solid rgba(56, 245, 108, 0.25);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================================
+   AI QUALITY
+========================================================= */
+
+.quality-box {
+
+    margin-top: 14px;
+
+    padding: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56, 245, 108, 0.10),
+            rgba(56, 245, 108, 0.035)
+        );
+
+    border-radius: 10px;
+
+    border:
+        1px solid rgba(56, 245, 108, 0.16);
+
+    color: #b9f9c9;
+}
+
+.quality-box strong {
+
+    color: var(--green-300);
+}
+
+/* =========================================================
+   AI PRICE
+========================================================= */
+
+.price-box {
+
+    margin-top: 14px;
+
+    padding: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 184, 52, 0.08),
+            rgba(255, 184, 52, 0.025)
+        );
+
+    border-radius: 10px;
+
+    border-left:
+        3px solid #ffbf45;
+
+    border-top:
+        1px solid rgba(255, 191, 69, 0.12);
+
+    border-right:
+        1px solid rgba(255, 191, 69, 0.08);
+
+    border-bottom:
+        1px solid rgba(255, 191, 69, 0.08);
+}
+
+.price-box strong {
+
+    color: #ffd276;
+}
+
+.price-value {
+
+    font-size: 19px;
+
+    font-weight: 900;
+
+    color: #ffc44f;
+
+    text-shadow:
+        0 0 12px rgba(255, 196, 79, 0.18);
+}
+
+/* =========================================================
+   AI DEMAND
+========================================================= */
+
+.demand-box {
+
+    margin-top: 14px;
+
+    padding: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(49, 170, 255, 0.08),
+            rgba(49, 170, 255, 0.025)
+        );
+
+    border-radius: 10px;
+
+    border-left:
+        3px solid #42b9ff;
+
+    border-top:
+        1px solid rgba(66, 185, 255, 0.12);
+
+    border-right:
+        1px solid rgba(66, 185, 255, 0.08);
+
+    border-bottom:
+        1px solid rgba(66, 185, 255, 0.08);
+}
+
+.demand-box strong {
+
+    color: #71ccff;
+}
+
+.demand-value {
+
+    font-size: 19px;
+
+    font-weight: 900;
+
+    color: #66c9ff;
+
+    text-shadow:
+        0 0 12px rgba(66, 185, 255, 0.2);
+}
+
+.loading-ai {
+
+    margin-top: 12px;
+
+    padding: 11px 13px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border-radius: 8px;
+
+    color: var(--text-muted);
+
+    border:
+        1px solid rgba(255,255,255,0.05);
+}
+
+/* =========================================================
+   BUY REQUEST STATUS
+========================================================= */
+
+.request-status,
+.order-status {
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
+
+    background:
+        rgba(255, 193, 7, 0.10);
+
+    color: #ffd866;
+
+    border:
+        1px solid rgba(255, 193, 7, 0.18);
+}
+
+.request-status.accepted,
+.order-status {
+
+    background:
+        rgba(56, 245, 108, 0.10);
+
+    color: var(--green-300);
+
+    border:
+        1px solid rgba(56, 245, 108, 0.2);
+}
+
+.request-status.rejected {
+
+    background:
+        rgba(255, 70, 70, 0.10);
+
+    color: #ff9a9a;
+
+    border:
+        1px solid rgba(255, 70, 70, 0.2);
+}
+
+/* =========================================================
+   REQUEST BUTTONS
+========================================================= */
+
+.request-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+    flex-wrap: wrap;
+}
+
+.accept-btn,
+.reject-btn {
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 9px;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.accept-btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #18d957,
+            #079b3f
+        );
+
+    color: #021208;
+
+    box-shadow:
+        0 5px 18px rgba(24, 217, 87, 0.14);
+}
+
+.accept-btn:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 25px rgba(24, 217, 87, 0.25);
+}
+
+.reject-btn {
+
+    background:
+        rgba(255, 70, 70, 0.10);
+
+    color: #ffaaaa;
+
+    border:
+        1px solid rgba(255, 70, 70, 0.2);
+}
+
+.reject-btn:hover {
+
+    background:
+        rgba(255, 70, 70, 0.18);
+
+    color: white;
+}
+
+.accept-btn:disabled,
+.reject-btn:disabled {
+
+    background: #33483b;
+
+    color: #87988d;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.no-requests,
+.no-orders {
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+    color: var(--text-muted);
+
+    background:
+        rgba(255,255,255,0.015);
+
+    border-radius: 12px;
+
+    border:
+        1px dashed rgba(87,255,133,0.10);
+}
+
+.no-requests h3,
+.no-orders h3 {
+
+    color: #b6d9c2;
+
+    margin-bottom: 7px;
+}
+
+.requests-error,
+.orders-error {
+
+    color: #ff9b9b;
+
+    text-align: center;
+
+    padding: 22px;
+
+    background:
+        rgba(255, 70, 70, 0.05);
+
+    border-radius: 10px;
+
+    border:
+        1px solid rgba(255, 70, 70, 0.10);
+}
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.payment-box {
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139, 195, 74, 0.08),
+            rgba(139, 195, 74, 0.025)
+        );
+
+    border-radius: 10px;
+
+    border-left:
+        3px solid #8bc34a;
+}
+
+.payment-paid {
+
+    color: #67f28b;
+
+    font-weight: 800;
+}
+
+.payment-pending {
+
+    color: #ffc05a;
+
+    font-weight: 800;
+}
+
+.payment-not-found {
+
+    color: #84988b;
+
+    font-weight: 800;
+}
+
+.order-total {
+
+    font-size: 20px !important;
+
+    font-weight: 900 !important;
+
+    color: var(--green-300) !important;
+}
+
+/* =========================================================
+   AI RECOMMENDATION
+========================================================= */
+
+.buyer-recommendation {
+
+    border-left:
+        3px solid var(--green-500);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(14, 50, 27, 0.94),
+            rgba(4, 22, 13, 0.96)
+        );
+}
+
+.recommendation-info {
+
+    margin-bottom: 16px;
+
+    color: var(--text-soft);
+
+    line-height: 1.6;
+}
+
+.recommend-btn {
+
+    padding: 12px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #20e65f,
+            #079c40
+        );
+
+    color: #021208;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(24, 217, 87, 0.18);
+
+    transition: 0.25s ease;
+}
+
+.recommend-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 32px rgba(24, 217, 87, 0.3);
+}
+
+.recommend-btn:disabled {
+
+    background: #33483b;
+
+    color: #8a9c90;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+/* =========================================================
+   RECOMMENDATION CARD
+========================================================= */
+
+.recommendation-card {
+
+    position: relative;
+
+    margin-top: 18px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56, 245, 108, 0.11),
+            rgba(56, 245, 108, 0.035)
+        );
+
+    border-radius: 13px;
+
+    border:
+        1px solid rgba(56, 245, 108, 0.18);
+
+    border-left:
+        4px solid var(--green-400);
+
+    box-shadow:
+        var(--green-glow);
+}
+
+.recommendation-card::after {
+
+    content: "AI";
+
+    position: absolute;
+
+    right: 18px;
+    top: 18px;
+
+    padding: 5px 8px;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    color: var(--green-300);
+
+    background:
+        rgba(56, 245, 108, 0.08);
+
+    border:
+        1px solid rgba(56, 245, 108, 0.18);
+
+    border-radius: 20px;
+}
+
+.recommendation-card h3 {
+
+    margin-top: 0;
+
+    color: var(--green-300);
+
+    font-size: 19px;
+}
+
+.recommendation-card p {
+
+    margin: 9px 0;
+
+    color: #b5d1be;
+
+    font-size: 14px;
+}
+
+.recommendation-card p strong {
+
+    color: #e4fff0;
+}
+
+.recommendation-score {
+
+    margin-top: 16px !important;
+
+    padding-top: 13px;
+
+    border-top:
+        1px solid rgba(56,245,108,0.12);
+
+    font-size: 24px !important;
+
+    font-weight: 900 !important;
+
+    color: var(--green-300) !important;
+
+    text-shadow:
+        0 0 18px rgba(56,245,108,0.25);
+}
+
+/* =========================================================
+   BUYER RANKING
+========================================================= */
+
+.buyer-ranking {
+
+    margin-top: 20px;
+}
+
+.buyer-ranking h4 {
+
+    color: #c8efd3;
+
+    margin-bottom: 11px;
+
+    font-size: 15px;
+}
+
+.buyer-rank-item {
+
+    background:
+        rgba(255,255,255,0.025);
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    margin-bottom: 8px;
+
+    color: #a8c5b1;
+
+    border:
+        1px solid rgba(87,255,133,0.07);
+
+    transition: 0.2s ease;
+}
+
+.buyer-rank-item:hover {
+
+    background:
+        rgba(56,245,108,0.05);
+
+    border-color:
+        rgba(56,245,108,0.15);
+}
+
+.buyer-rank-item strong {
+
+    color: var(--green-300);
+
+    margin-right: 5px;
+}
+
+/* =========================================================
+   RECOMMENDATION ERROR
+========================================================= */
+
+.recommendation-error {
+
+    margin-top: 12px;
+
+    padding: 13px;
+
+    background:
+        rgba(255, 70, 70, 0.07);
+
+    color: #ff9b9b;
+
+    border-radius: 9px;
+
+    border:
+        1px solid rgba(255,70,70,0.12);
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #03100a;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background:
+        linear-gradient(
+            #18d957,
+            #078238
+        );
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #38f56c;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    header {
+
+        height: 64px;
+
+        padding:
+            0 15px;
+    }
+
+    .logo {
+
+        font-size: 18px;
+    }
+
+    .logo::after {
+        display: none;
+    }
+
+    .logout-btn {
+
+        padding: 8px 13px;
+
+        font-size: 12px;
+    }
+
+    .dashboard-container {
+
+        width:
+            calc(100% - 18px);
+
+        margin-top: 88px;
+
+        padding: 0;
+    }
+
+    .dashboard-header {
+
+        padding: 22px 19px;
+
+        border-radius: 15px;
+    }
+
+    .dashboard-header h1 {
+
+        font-size: 25px;
+
+        padding-right: 20px;
+    }
+
+    .dashboard-header p {
+
+        font-size: 13px;
+    }
+
+    .add-crop-box,
+    .my-crops,
+    .buy-requests,
+    .my-orders,
+    .buyer-recommendation {
+
+        padding: 18px;
+
+        border-radius: 15px;
+    }
+
+    .crop-form {
+
+        grid-template-columns: 1fr;
+    }
+
+    .crop-form textarea,
+    .crop-form button,
+    .file-info {
+
+        grid-column: 1;
+    }
+
+    .crop-card,
+    .request-card,
+    .order-card {
+
+        padding: 16px;
+    }
+
+    .request-actions {
+
+        flex-direction: column;
+    }
+
+    .accept-btn,
+    .reject-btn {
+
+        width: 100%;
+    }
+
+    .crop-image-preview {
+
+        width: 100%;
+
+        max-width: 260px;
+    }
+
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .dashboard-header h1 {
+        font-size: 22px;
+    }
+
+    .add-crop-box h2,
+    .my-crops h2,
+    .buy-requests h2,
+    .my-orders h2,
+    .buyer-recommendation h2 {
+        font-size: 18px;
+    }
+
+    .crop-form input,
+    .crop-form select,
+    .crop-form textarea {
+        font-size: 13px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+    🌱 Khet2Deal
+</div>
+
+<button
+    class="logout-btn"
+    onclick="logout()">
+    Logout
+</button>
+
+</header>
+
+
+<div class="dashboard-container">
+
+
+<div class="dashboard-header">
+
+<h1>
+    Welcome,
+    <span id="farmerName">Farmer</span>
+    👨‍🌾
+</h1>
+
+<p>
+    Manage your crops, track AI insights and connect directly with buyers.
+</p>
+
+</div>
+
+
+<!-- =====================================================
+     ADD CROP
+===================================================== -->
+
+<div class="add-crop-box">
+
+<h2>
+    🌱 Add New Crop
+</h2>
+
+
+<form
+    id="cropForm"
+    class="crop-form"
+    onsubmit="createCropListing(event)">
+
+
+<select id="crop_id" required>
+
+    <option value="">
+        Select Crop
+    </option>
+
+    <option value="1">
+        Tomato
+    </option>
+
+    <option value="2">
+        Potato
+    </option>
+
+    <option value="3">
+        Onion
+    </option>
+
+</select>
+
+
+<input
+    type="number"
+    id="quantity"
+    placeholder="Quantity (kg)"
+    min="1"
+    step="0.01"
+    required>
+
+
+<select id="unit" required>
+
+    <option value="kg">
+        Kilogram (kg)
+    </option>
+
+    <option value="quintal">
+        Quintal
+    </option>
+
+    <option value="ton">
+        Ton
+    </option>
+
+</select>
+
+
+<input
+    type="number"
+    id="expected_price"
+    placeholder="Expected Price (₹/kg)"
+    min="0"
+    step="0.01">
+
+
+<input
+    type="date"
+    id="harvest_date"
+    required>
+
+
+<input
+    type="file"
+    id="cropImage"
+    accept="image/jpeg,image/jpg,image/png,image/webp"
+    required>
+
+
+<div class="file-info">
+
+    📸 Upload a clear crop photo.
+    JPG, PNG or WEBP — Maximum 5 MB.
+
+</div>
+
+
+<textarea
+    id="description"
+    placeholder="Describe your crop, quality, freshness, harvesting details..."></textarea>
+
+
+<button
+    type="submit"
+    id="addCropButton">
+
+    🚜 List Crop
+
+</button>
+
+</form>
+
+
+<div id="message" class="message"></div>
+
+</div>
+
+
+<!-- =====================================================
+     MY CROPS
+===================================================== -->
+
+<div class="my-crops">
+
+<h2>
+    🌾 My Crops
+</h2>
+
+<div id="cropList">
+    Loading crops...
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     BUY REQUESTS
+===================================================== -->
+
+<div class="buy-requests">
+
+<h2>
+    🛒 Buy Requests
+</h2>
+
+<div id="buyRequestList">
+    Loading buy requests...
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     AI BUYER RECOMMENDATION
+===================================================== -->
+
+<div class="buyer-recommendation">
+
+<h2>
+    🤖 AI Recommended Buyer
+</h2>
+
+<p class="recommendation-info">
+    Find the best nearby buyer based on price, distance and rating.
+</p>
+
+<button
+    id="recommendButton"
+    class="recommend-btn"
+    onclick="getBuyerRecommendation()">
+
+    🔍 Find Best Buyer
+
+</button>
+
+<div id="recommendationResult"></div>
+
+</div>
+
+
+<!-- =====================================================
+     MY ORDERS
+===================================================== -->
+
+<div class="my-orders">
+
+<h2>
+    📦 My Orders
+</h2>
+
+<div id="orderList">
+    Loading orders...
+</div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   API
+========================================================= */
+
+const API_URL =
+    "http://localhost:5000";
+
+
+const user =
+    JSON.parse(
+        localStorage.getItem("user")
+    );
+
+
+let farmerId = null;
+
+
+if (!user) {
+
+    window.location.href =
+        "index.html";
+
+} else {
+
+    document.getElementById(
+        "farmerName"
+    ).textContent =
+        user.name || "Farmer";
+
+    loadFarmerProfile();
+
+}
+
+
+/* =========================================================
+   LOAD FARMER PROFILE
+========================================================= */
+
+async function loadFarmerProfile() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/farmer/profile/${user.user_id}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Farmer profile not found"
+            );
+
+        }
+
+
+        if (data.farmer) {
+
+            farmerId =
+                data.farmer.farmer_id;
+
+        } else {
+
+            farmerId =
+                user.farmer_id;
+
+        }
+
+
+        if (!farmerId) {
+
+            throw new Error(
+                "Farmer ID not found"
+            );
+
+        }
+
+
+        loadMyCrops();
+
+        loadBuyRequests();
+
+        loadOrders();
+
+
+    } catch (error) {
+
+        console.error(
+            "Profile error:",
+            error
+        );
+
+
+        document.getElementById(
+            "cropList"
+        ).innerHTML =
+            "<p>Unable to load farmer profile.</p>";
+
+
+        document.getElementById(
+            "buyRequestList"
+        ).innerHTML =
+            `<p class="requests-error">
+                Unable to load buy requests.
+            </p>`;
+
+
+        document.getElementById(
+            "orderList"
+        ).innerHTML =
+            `<p class="orders-error">
+                Unable to load orders.
+            </p>`;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD MY CROPS
+========================================================= */
+
+async function loadMyCrops() {
+
+    if (!farmerId) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/listings/farmer/${farmerId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load crops"
+            );
+
+        }
+
+
+        const cropList =
+            document.getElementById(
+                "cropList"
+            );
+
+
+        if (!data || data.length === 0) {
+
+            cropList.innerHTML =
+                "<p>No crops added yet.</p>";
+
+            return;
+
+        }
+
+
+        cropList.innerHTML = "";
+
+
+        for (const crop of data) {
+
+            const imageUrl =
+                crop.image_url
+                    ? `${API_URL}${crop.image_url}`
+                    : null;
+
+
+            const qualityScore =
+                crop.quality_score !== undefined &&
+                crop.quality_score !== null
+                    ? crop.quality_score
+                    : null;
+
+
+            const grade =
+                crop.grade || null;
+
+
+            let pricePrediction = null;
+
+
+            try {
+
+                const priceResponse =
+                    await fetch(
+                        `${API_URL}/api/farmer/price-prediction/${crop.crop_id}`
+                    );
+
+
+                if (priceResponse.ok) {
+
+                    const priceData =
+                        await priceResponse.json();
+
+                    pricePrediction =
+                        priceData.prediction || null;
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Price prediction error:",
+                    error
+                );
+
+            }
+
+
+            let demandPrediction = null;
+
+
+            try {
+
+                const demandResponse =
+                    await fetch(
+                        `${API_URL}/api/farmer/demand-prediction/${crop.crop_id}`
+                    );
+
+
+                if (demandResponse.ok) {
+
+                    const demandData =
+                        await demandResponse.json();
+
+                    demandPrediction =
+                        demandData.prediction || null;
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Demand prediction error:",
+                    error
+                );
+
+            }
+
+
+            let priceTargetDate =
+                pricePrediction &&
+                pricePrediction.target_date
+                    ? formatDate(
+                        pricePrediction.target_date
+                    )
+                    : "N/A";
+
+
+            let demandTargetDate =
+                demandPrediction &&
+                demandPrediction.target_date
+                    ? formatDate(
+                        demandPrediction.target_date
+                    )
+                    : "N/A";
+
+
+            let demandStatus =
+                demandPrediction
+                    ? demandPrediction.demand_status
+                    : null;
+
+
+            let demandArrow = "→";
+
+
+            if (demandStatus === "High") {
+                demandArrow = "↑";
+            }
+
+
+            if (demandStatus === "Low") {
+                demandArrow = "↓";
+            }
+
+
+            cropList.innerHTML += `
+
+                <div class="crop-card">
+
+                    <h3>
+                        🌱 ${crop.crop_name || "Crop"}
+                    </h3>
+
+
+                    <p>
+                        <strong>
+                            Quantity:
+                        </strong>
+
+                        ${crop.quantity || 0}
+                        ${crop.unit || "kg"}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Expected Price:
+                        </strong>
+
+                        ₹${crop.expected_price ?? "N/A"}/kg
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Harvest Date:
+                        </strong>
+
+                        ${formatDate(crop.harvest_date)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Status:
+                        </strong>
+
+                        ${crop.status || "active"}
+                    </p>
+
+
+                    ${
+                        crop.description
+                            ? `
+                                <p>
+                                    <strong>
+                                        Description:
+                                    </strong>
+
+                                    ${crop.description}
+                                </p>
+                            `
+                            : ""
+                    }
+
+
+                    ${
+                        imageUrl
+                            ? `
+                                <img
+                                    src="${imageUrl}"
+                                    class="crop-image-preview"
+                                    alt="Crop Image">
+                            `
+                            : ""
+                    }
+
+
+                    ${
+                        qualityScore !== null
+                            ? `
+                                <div class="quality-box">
+
+                                    🤖
+
+                                    <strong>
+                                        AI Crop Quality:
+                                    </strong>
+
+                                    ${Number(
+                                        qualityScore
+                                    ).toFixed(2)}%
+
+                                    ${
+                                        grade
+                                            ? `(${grade})`
+                                            : ""
+                                    }
+
+                                </div>
+                            `
+                            : ""
+                    }
+
+
+                    ${
+                        pricePrediction
+                            ? `
+                                <div class="price-box">
+
+                                    💰
+
+                                    <strong>
+                                        AI Price Prediction:
+                                    </strong>
+
+                                    <span class="price-value">
+
+                                        ₹${Number(
+                                            pricePrediction.predicted_price
+                                        ).toFixed(2)}
+
+                                        ${pricePrediction.unit || ""}
+
+                                    </span>
+
+
+                                    <p>
+                                        📍 Market:
+                                        ${pricePrediction.market_name || "N/A"}
+                                    </p>
+
+
+                                    <p>
+                                        🔮 Target Date:
+                                        ${priceTargetDate}
+                                    </p>
+
+
+                                    <p>
+                                        🤖 Model:
+                                        ${pricePrediction.model_version || "N/A"}
+                                    </p>
+
+                                </div>
+                            `
+                            : `
+                                <div class="loading-ai">
+                                    💰 Price prediction not available.
+                                </div>
+                            `
+                    }
+
+
+                    ${
+                        demandPrediction
+                            ? `
+                                <div class="demand-box">
+
+                                    📈
+
+                                    <strong>
+                                        AI Demand Prediction:
+                                    </strong>
+
+                                    <span class="demand-value">
+
+                                        ${demandStatus || "Stable"}
+                                        ${demandArrow}
+
+                                    </span>
+
+
+                                    <p>
+                                        📊 Trend:
+                                        ${Number(
+                                            demandPrediction.trend_value
+                                        ).toFixed(2)}
+                                    </p>
+
+
+                                    <p>
+                                        📍 Market:
+                                        ${demandPrediction.market_name || "N/A"}
+                                    </p>
+
+
+                                    <p>
+                                        🔮 Target Date:
+                                        ${demandTargetDate}
+                                    </p>
+
+
+                                    <p>
+                                        🤖 Model:
+                                        ${demandPrediction.model_version || "N/A"}
+                                    </p>
+
+                                </div>
+                            `
+                            : `
+                                <div class="loading-ai">
+                                    📈 Demand prediction not available.
+                                </div>
+                            `
+                    }
+
+                </div>
+
+            `;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Load crops error:",
+            error
+        );
+
+
+        document.getElementById(
+            "cropList"
+        ).innerHTML =
+            "<p>Unable to load crops.</p>";
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD BUY REQUESTS
+========================================================= */
+
+async function loadBuyRequests() {
+
+    if (!farmerId) {
+        return;
+    }
+
+
+    const requestList =
+        document.getElementById(
+            "buyRequestList"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/buy-requests/farmer/${farmerId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load buy requests"
+            );
+
+        }
+
+
+        const requests =
+            data.requests || [];
+
+
+        if (requests.length === 0) {
+
+            requestList.innerHTML = `
+
+                <div class="no-requests">
+
+                    <h3>
+                        📭 No Buy Requests
+                    </h3>
+
+                    <p>
+                        You don't have any buy requests yet.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        requestList.innerHTML = "";
+
+
+        requests.forEach(
+            (request) => {
+
+                const status =
+                    request.status || "pending";
+
+
+                const isPending =
+                    status === "pending";
+
+
+                requestList.innerHTML += `
+
+                    <div class="request-card">
+
+                        <h3>
+                            🌱 ${request.crop_name || "Crop"}
+                        </h3>
+
+
+                        <p>
+                            👤
+                            <strong>
+                                Buyer:
+                            </strong>
+
+                            ${request.buyer_name || "N/A"}
+                        </p>
+
+
+                        <p>
+                            🏢
+                            <strong>
+                                Business:
+                            </strong>
+
+                            ${request.business_name || "N/A"}
+                        </p>
+
+
+                        <p>
+                            📦
+                            <strong>
+                                Requested Quantity:
+                            </strong>
+
+                            ${request.requested_quantity}
+                            ${request.unit || "kg"}
+                        </p>
+
+
+                        <p>
+                            💰
+                            <strong>
+                                Offered Price:
+                            </strong>
+
+                            ${
+                                request.offered_price !== null &&
+                                request.offered_price !== undefined
+                                    ? `₹${Number(
+                                        request.offered_price
+                                    ).toFixed(2)}/${request.unit || "kg"}`
+                                    : "Not specified"
+                            }
+                        </p>
+
+
+                        <p>
+                            💵
+                            <strong>
+                                Your Expected Price:
+                            </strong>
+
+                            ₹${Number(
+                                request.expected_price || 0
+                            ).toFixed(2)}/${request.unit || "kg"}
+                        </p>
+
+
+                        ${
+                            request.message
+                                ? `
+                                    <p>
+                                        💬
+                                        <strong>
+                                            Message:
+                                        </strong>
+
+                                        ${request.message}
+                                    </p>
+                                `
+                                : ""
+                        }
+
+
+                        <p>
+                            📍
+                            <strong>
+                                Buyer Location:
+                            </strong>
+
+                            ${
+                                [
+                                    request.buyer_district,
+                                    request.buyer_state
+                                ]
+                                .filter(Boolean)
+                                .join(", ")
+                                || "Not specified"
+                            }
+
+                        </p>
+
+
+                        <p>
+                            ⭐
+                            <strong>
+                                Buyer Rating:
+                            </strong>
+
+                            ${request.buyer_rating || "0.0"}/5
+                        </p>
+
+
+                        <span class="
+                            request-status
+                            ${status === "accepted" ? "accepted" : ""}
+                            ${status === "rejected" ? "rejected" : ""}
+                        ">
+
+                            ${
+                                status === "pending"
+                                    ? "⏳ Pending"
+                                    : status === "accepted"
+                                        ? "✅ Accepted"
+                                        : status === "rejected"
+                                            ? "❌ Rejected"
+                                            : status
+                            }
+
+                        </span>
+
+
+                        ${
+                            isPending
+                                ? `
+                                    <div class="request-actions">
+
+                                        <button
+                                            class="accept-btn"
+                                            onclick="acceptBuyRequest(${request.request_id})">
+
+                                            ✅ Accept Request
+
+                                        </button>
+
+
+                                        <button
+                                            class="reject-btn"
+                                            onclick="rejectBuyRequest(${request.request_id})">
+
+                                            ❌ Reject Request
+
+                                        </button>
+
+                                    </div>
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Load buy requests error:",
+            error
+        );
+
+
+        requestList.innerHTML = `
+
+            <div class="requests-error">
+
+                ❌ Unable to load buy requests.
+
+                <br><br>
+
+                Make sure the backend server
+                is running.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD FARMER ORDERS
+========================================================= */
+
+async function loadOrders() {
+
+    if (!farmerId) {
+        return;
+    }
+
+
+    const orderList =
+        document.getElementById(
+            "orderList"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/orders/farmer/${farmerId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load orders"
+            );
+
+        }
+
+
+        const orders =
+            data.orders || [];
+
+
+        if (orders.length === 0) {
+
+            orderList.innerHTML = `
+
+                <div class="no-orders">
+
+                    <h3>
+                        📭 No Orders Yet
+                    </h3>
+
+                    <p>
+                        Accepted buy requests will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        orderList.innerHTML = "";
+
+
+        orders.forEach(
+            (order) => {
+
+                const paymentStatus =
+                    order.payment_status ||
+                    null;
+
+
+                let paymentHTML = "";
+
+
+                if (paymentStatus === "paid") {
+
+                    paymentHTML = `
+
+                        <div class="payment-box">
+
+                            💳
+
+                            <strong>
+                                Payment:
+                            </strong>
+
+                            <span class="payment-paid">
+                                ✅ Paid
+                            </span>
+
+
+                            <p>
+                                Payment ID:
+                                ${order.payment_id || "N/A"}
+                            </p>
+
+
+                            <p>
+                                Method:
+                                ${order.payment_method || "N/A"}
+                            </p>
+
+
+                            <p>
+                                Transaction ID:
+                                ${order.transaction_id || "N/A"}
+                            </p>
+
+
+                            <p>
+                                Payment Date:
+                                ${formatDate(order.payment_date)}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                } else {
+
+                    paymentHTML = `
+
+                        <div class="payment-box">
+
+                            💳
+
+                            <strong>
+                                Payment:
+                            </strong>
+
+                            <span class="payment-pending">
+
+                                ⏳ ${
+                                    paymentStatus
+                                        ? paymentStatus.toUpperCase()
+                                        : "NOT PAID"
+                                }
+
+                            </span>
+
+
+                            ${
+                                paymentStatus
+                                    ? `
+                                        <p>
+                                            Payment has not been completed yet.
+                                        </p>
+                                    `
+                                    : `
+                                        <p>
+                                            Buyer payment is pending.
+                                        </p>
+                                    `
+                            }
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                orderList.innerHTML += `
+
+                    <div class="order-card">
+
+                        <h3>
+                            📦 ${order.crop_name || "Crop"}
+                        </h3>
+
+
+                        <p>
+                            🆔
+                            <strong>
+                                Order ID:
+                            </strong>
+
+                            ${order.order_id}
+                        </p>
+
+
+                        <p>
+                            👤
+                            <strong>
+                                Buyer:
+                            </strong>
+
+                            ${order.buyer_name || "N/A"}
+                        </p>
+
+
+                        <p>
+                            🏢
+                            <strong>
+                                Business:
+                            </strong>
+
+                            ${order.business_name || "N/A"}
+                        </p>
+
+
+                        <p>
+                            📦
+                            <strong>
+                                Quantity:
+                            </strong>
+
+                            ${order.quantity}
+                            kg
+                        </p>
+
+
+                        <p>
+                            💰
+                            <strong>
+                                Agreed Price:
+                            </strong>
+
+                            ₹${Number(
+                                order.agreed_price || 0
+                            ).toFixed(2)}/kg
+                        </p>
+
+
+                        <p class="order-total">
+
+                            💵 Total Amount:
+
+                            ₹${Number(
+                                order.total_amount || 0
+                            ).toFixed(2)}
+
+                        </p>
+
+
+                        <p>
+                            📍
+                            <strong>
+                                Buyer Location:
+                            </strong>
+
+                            ${
+                                [
+                                    order.buyer_district,
+                                    order.buyer_state
+                                ]
+                                .filter(Boolean)
+                                .join(", ")
+                                || "Not specified"
+                            }
+
+                        </p>
+
+
+                        <p>
+                            📞
+                            <strong>
+                                Buyer Phone:
+                            </strong>
+
+                            ${order.buyer_phone || "N/A"}
+                        </p>
+
+
+                        <p>
+                            📧
+                            <strong>
+                                Buyer Email:
+                            </strong>
+
+                            ${order.buyer_email || "N/A"}
+                        </p>
+
+
+                        <p>
+                            🗓️
+                            <strong>
+                                Order Date:
+                            </strong>
+
+                            ${formatDate(order.order_date)}
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Order Status:
+                            </strong>
+
+                            <span class="order-status">
+
+                                ${order.status || "confirmed"}
+
+                            </span>
+
+                        </p>
+
+
+                        ${paymentHTML}
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Load farmer orders error:",
+            error
+        );
+
+
+        orderList.innerHTML = `
+
+            <div class="orders-error">
+
+                ❌ Unable to load orders.
+
+                <br><br>
+
+                Make sure the backend server
+                is running.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   AI BUYER RECOMMENDATION
+========================================================= */
+
+async function getBuyerRecommendation() {
+
+    if (!farmerId) {
+
+        alert(
+            "Farmer profile is not loaded yet."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "recommendButton"
+        );
+
+
+    const result =
+        document.getElementById(
+            "recommendationResult"
+        );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "⏳ Finding best buyer...";
+
+    result.innerHTML = "";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/recommendations`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        farmer_id:
+                            farmerId,
+
+                        listing_id:
+                            null
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to get recommendation"
+            );
+
+        }
+
+
+        const best =
+            data.recommended_buyer;
+
+
+        const allBuyers =
+            data.all_buyers || [];
+
+
+        if (!best) {
+
+            throw new Error(
+                "No buyer recommendation available"
+            );
+
+        }
+
+
+        result.innerHTML = `
+
+            <div class="recommendation-card">
+
+                <h3>
+                    🏆 Best Buyer Recommended
+                </h3>
+
+
+                <p>
+                    👤
+                    <strong>
+                        Buyer:
+                    </strong>
+
+                    ${
+                        best.buyer_name ||
+                        "Buyer #" + best.buyer_id
+                    }
+
+                </p>
+
+
+                <p>
+                    🏢
+                    <strong>
+                        Business:
+                    </strong>
+
+                    ${
+                        best.business_name ||
+                        "N/A"
+                    }
+
+                </p>
+
+
+                <p>
+                    💰
+                    <strong>
+                        Price:
+                    </strong>
+
+                    ₹${Number(
+                        best.price_per_kg || 0
+                    ).toFixed(2)}/kg
+
+                </p>
+
+
+                <p>
+                    📍
+                    <strong>
+                        Distance:
+                    </strong>
+
+                    ${Number(
+                        best.distance_km || 0
+                    ).toFixed(2)} km
+
+                </p>
+
+
+                <p>
+                    ⭐
+                    <strong>
+                        Rating:
+                    </strong>
+
+                    ${Number(
+                        best.rating || 0
+                    ).toFixed(1)}/5
+
+                </p>
+
+
+                <p class="recommendation-score">
+
+                    🤖 AI Score:
+
+                    ${Number(
+                        best.score || 0
+                    ).toFixed(2)}
+
+                </p>
+
+            </div>
+
+
+            <div class="buyer-ranking">
+
+                <h4>
+                    📊 Buyer Ranking
+                </h4>
+
+                ${
+                    allBuyers.map(
+                        (buyer, index) => `
+
+                            <div class="buyer-rank-item">
+
+                                <strong>
+                                    #${index + 1}
+                                </strong>
+
+                                ${
+                                    buyer.buyer_name ||
+                                    "Buyer #" + buyer.buyer_id
+                                }
+
+                                —
+
+                                ₹${Number(
+                                    buyer.price_per_kg || 0
+                                ).toFixed(2)}/kg
+
+                                —
+
+                                ${Number(
+                                    buyer.distance_km || 0
+                                ).toFixed(2)} km
+
+                                —
+
+                                ⭐${Number(
+                                    buyer.rating || 0
+                                ).toFixed(1)}
+
+                                —
+
+                                Score:
+
+                                ${Number(
+                                    buyer.score || 0
+                                ).toFixed(2)}
+
+                            </div>
+
+                        `
+                    ).join("")
+                }
+
+            </div>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Recommendation error:",
+            error
+        );
+
+
+        result.innerHTML = `
+
+            <div class="recommendation-error">
+
+                ❌ Unable to get buyer recommendation.
+
+                <br><br>
+
+                ${error.message}
+
+            </div>
+
+        `;
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "🔍 Find Best Buyer";
+
+    }
+
+}
+
+
+/* =========================================================
+   ACCEPT BUY REQUEST
+========================================================= */
+
+async function acceptBuyRequest(requestId) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to ACCEPT this buy request?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const buttons =
+            document.querySelectorAll(
+                ".request-card button"
+            );
+
+
+        buttons.forEach(
+            (button) => {
+
+                button.disabled = true;
+
+            }
+        );
+
+
+        const response =
+            await fetch(
+                `${API_URL}/api/buy-requests/${requestId}/accept`,
+                {
+                    method: "PUT"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to accept buy request"
+            );
+
+        }
+
+
+        alert(
+            "✅ Buy request accepted!\n\n" +
+            "Order ID: " +
+            data.order_id +
+            "\n" +
+            "Total Amount: ₹" +
+            Number(
+                data.total_amount
+            ).toFixed(2)
+        );
+
+
+        await loadBuyRequests();
+
+        await loadMyCrops();
+
+        await loadOrders();
+
+
+    } catch (error) {
+
+        console.error(
+            "Accept request error:",
+            error
+        );
+
+
+        alert(
+            "❌ " +
+            error.message
+        );
+
+
+        await loadBuyRequests();
+
+    }
+
+}
+
+
+/* =========================================================
+   REJECT BUY REQUEST
+========================================================= */
+
+async function rejectBuyRequest(requestId) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to REJECT this buy request?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/buy-requests/${requestId}/reject`,
+                {
+                    method: "PUT"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to reject buy request"
+            );
+
+        }
+
+
+        alert(
+            "❌ Buy request rejected successfully."
+        );
+
+
+        await loadBuyRequests();
+
+
+    } catch (error) {
+
+        console.error(
+            "Reject request error:",
+            error
+        );
+
+
+        alert(
+            "❌ " +
+            error.message
+        );
+
+
+        await loadBuyRequests();
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE CROP LISTING
+========================================================= */
+
+async function createCropListing(event) {
+
+    event.preventDefault();
+
+
+    const button =
+        document.getElementById(
+            "addCropButton"
+        );
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    const image =
+        document.getElementById(
+            "cropImage"
+        ).files[0];
+
+
+    if (!farmerId) {
+
+        message.textContent =
+            "❌ Farmer profile is not loaded.";
+
+        return;
+
+    }
+
+
+    if (!image) {
+
+        message.textContent =
+            "❌ Please upload a crop image.";
+
+        return;
+
+    }
+
+
+    if (image.size > 5 * 1024 * 1024) {
+
+        message.textContent =
+            "❌ Image must be less than 5 MB.";
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "⏳ Listing crop...";
+
+    message.textContent =
+        "";
+
+
+    try {
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "farmer_id",
+            farmerId
+        );
+
+
+        formData.append(
+            "crop_id",
+            document.getElementById(
+                "crop_id"
+            ).value
+        );
+
+
+        formData.append(
+            "quantity",
+            document.getElementById(
+                "quantity"
+            ).value
+        );
+
+
+        formData.append(
+            "unit",
+            document.getElementById(
+                "unit"
+            ).value
+        );
+
+
+        formData.append(
+            "expected_price",
+            document.getElementById(
+                "expected_price"
+            ).value
+        );
+
+
+        formData.append(
+            "harvest_date",
+            document.getElementById(
+                "harvest_date"
+            ).value
+        );
+
+
+        formData.append(
+            "description",
+            document.getElementById(
+                "description"
+            ).value
+        );
+
+
+        formData.append(
+            "image",
+            image
+        );
+
+
+        const response =
+            await fetch(
+                `${API_URL}/api/listings`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to create crop listing"
+            );
+
+        }
+
+
+        message.innerHTML = `
+            ✅ Crop listed successfully.
+            <br>
+            🤖 AI quality assessment completed.
+        `;
+
+
+        document.getElementById(
+            "cropForm"
+        ).reset();
+
+
+        await loadMyCrops();
+
+
+    } catch (error) {
+
+        console.error(
+            "Create crop error:",
+            error
+        );
+
+
+        message.textContent =
+            "❌ " +
+            error.message;
+
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "🚜 List Crop";
+
+    }
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return "N/A";
+    }
+
+
+    const date =
+        new Date(dateValue);
+
+
+    if (isNaN(date.getTime())) {
+        return dateValue;
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "user"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>s

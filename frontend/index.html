@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Khet2Deal</title>
+
+    <link
+        rel="stylesheet"
+        href="./style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <span class="logo-icon">
+            🌱
+        </span>
+
+        <div>
+
+            <h2>
+                Khet<span>2</span>Deal
+            </h2>
+
+            <p>
+                Direct crop-to-buyer deals
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Welcome to
+        </h1>
+
+        <h2>
+            Khet<span>2</span>Deal
+        </h2>
+
+        <p class="tagline">
+            Smart. Transparent. Profitable.
+        </p>
+
+        <p class="choose-text">
+            Choose your role to continue
+        </p>
+
+
+        <!-- ROLE CARDS -->
+
+        <div class="role-container">
+
+
+            <!-- FARMER -->
+
+            <div class="role-card farmer-card">
+
+                <div class="role-icon">
+                    🌱
+                </div>
+
+                <h3>
+                    FARMER
+                </h3>
+
+                <p>
+                    Sell your crops<br>
+                    directly to buyers
+                </p>
+
+                <button
+                    type="button"
+                    onclick="openLogin('farmer')">
+
+                    Login / Sign In →
+
+                </button>
+
+                <button
+                    type="button"
+                    class="signup-small"
+                    onclick="openSignup('farmer')">
+
+                    New User? Sign Up
+
+                </button>
+
+            </div>
+
+
+
+            <!-- BUYER -->
+
+            <div class="role-card buyer-card">
+
+                <div class="role-icon">
+                    🛒
+                </div>
+
+                <h3>
+                    BUYER
+                </h3>
+
+                <p>
+                    Buy quality crops<br>
+                    directly from farmers
+                </p>
+
+                <button
+                    type="button"
+                    onclick="openLogin('buyer')">
+
+                    Login / Sign In →
+
+                </button>
+
+                <button
+                    type="button"
+                    class="signup-small"
+                    onclick="openSignup('buyer')">
+
+                    New User? Sign Up
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTTOM TEXT -->
+
+        <p class="bottom-text">
+
+            Building a fairer agricultural marketplace<br>
+            for everyone.
+
+        </p>
+
+
+        <div class="features">
+
+            <span>
+                🛡️ Secure
+            </span>
+
+            <span>
+                👁️ Transparent
+            </span>
+
+            <span>
+                ✓ Reliable
+            </span>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     AI BUTTON
+===================================================== -->
+
+<button
+    type="button"
+    class="ai-button"
+    onclick="toggleChat()">
+
+    🤖
+
+</button>
+
+
+
+<!-- =====================================================
+     AI CHATBOT
+===================================================== -->
+
+<div
+    class="chatbot"
+    id="chatbot">
+
+
+    <div class="chat-header">
+
+        <div>
+
+            <strong>
+                🤖 Khet2Deal AI
+            </strong>
+
+            <small>
+                Your farming assistant
+            </small>
+
+        </div>
+
+
+        <button
+            type="button"
+            onclick="toggleChat()">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+
+    <div
+        class="chat-body"
+        id="chatBody">
+
+
+        <div class="bot-message">
+
+            👋 Hello! I'm your Khet2Deal AI assistant.
+
+            <br><br>
+
+            How can I help you?
+
+        </div>
+
+
+
+        <div class="ai-options">
+
+
+            <button
+                type="button"
+                onclick="aiFeature('quality')">
+
+                🌾 Crop Quality
+
+            </button>
+
+
+            <button
+                type="button"
+                onclick="aiFeature('price')">
+
+                💰 Price Prediction
+
+            </button>
+
+
+            <button
+                type="button"
+                onclick="aiFeature('demand')">
+
+                📈 Demand Forecast
+
+            </button>
+
+
+            <button
+                type="button"
+                onclick="aiFeature('buyer')">
+
+                🤝 Find Best Buyer
+
+            </button>
+
+
+            <button
+                type="button"
+                onclick="aiFeature('help')">
+
+                💬 App Help
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div class="chat-input">
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Ask something..."
+            onkeydown="handleChatKey(event)">
+
+
+        <button
+            type="button"
+            onclick="sendMessage()">
+
+            ➤
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     LOGIN MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="loginModal">
+
+
+    <div class="modal-content">
+
+
+        <button
+            type="button"
+            class="close-btn"
+            onclick="closeLogin()">
+
+            ×
+
+        </button>
+
+
+        <h2 id="loginTitle">
+            Login
+        </h2>
+
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+            autocomplete="email">
+
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            autocomplete="current-password">
+
+
+        <button
+            type="button"
+            class="login-btn"
+            onclick="loginUser()">
+
+            Login
+
+        </button>
+
+
+        <p id="loginMessage"></p>
+
+
+        <p class="switch-text">
+
+            New user?
+
+            <span onclick="switchToSignup()">
+                Sign Up
+            </span>
+
+        </p>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     SIGNUP MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="signupModal">
+
+
+    <div class="modal-content">
+
+
+        <button
+            type="button"
+            class="close-btn"
+            onclick="closeSignup()">
+
+            ×
+
+        </button>
+
+
+        <h2 id="signupTitle">
+            Create Account
+        </h2>
+
+
+
+        <input
+            type="text"
+            id="signupName"
+            placeholder="Full Name"
+            autocomplete="name">
+
+
+        <input
+            type="email"
+            id="signupEmail"
+            placeholder="Email"
+            autocomplete="email">
+
+
+        <input
+            type="text"
+            id="signupPhone"
+            placeholder="Phone Number"
+            autocomplete="tel">
+
+
+        <input
+            type="password"
+            id="signupPassword"
+            placeholder="Password"
+            autocomplete="new-password">
+
+
+
+        <!-- LOCATION -->
+
+        <button
+            type="button"
+            id="locationBtn"
+            class="login-btn"
+            onclick="getUserLocation()">
+
+            📍 Allow Location
+
+        </button>
+
+
+        <p
+            id="locationMessage"
+            style="font-size:13px; margin:8px 0;">
+
+            Please allow location access.
+
+        </p>
+
+
+        <input
+            type="hidden"
+            id="signupLatitude">
+
+
+        <input
+            type="hidden"
+            id="signupLongitude">
+
+
+
+        <!-- CREATE ACCOUNT -->
+
+        <button
+            type="button"
+            class="login-btn"
+            onclick="registerUser()">
+
+            Create Account
+
+        </button>
+
+
+        <p id="signupMessage"></p>
+
+
+        <p class="switch-text">
+
+            Already have an account?
+
+            <span onclick="switchToLogin()">
+                Login
+            </span>
+
+        </p>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN JAVASCRIPT
+===================================================== -->
+
+<script src="./script.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khet2Deal - Buyer Dashboard</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+:root {
+    --bg-dark: #0a0e17;
+    --card-bg: rgba(16, 24, 39, 0.75);
+    --border-color: rgba(0, 242, 254, 0.2);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --neon-green: #00ff87;
+    --neon-cyan: #00f2fe;
+    --neon-accent: #60a5fa;
+    --glow-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(0, 255, 135, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.08) 0px, transparent 50%);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: rgba(10, 14, 23, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(0, 255, 135, 0.3);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--text-muted);
+}
+
+.user-info button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-info button:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.dashboard-title h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #fff, var(--neon-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dashboard-title p {
+    color: var(--text-muted);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.dashboard-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-cyan);
+    box-shadow: var(--glow-shadow);
+}
+
+.dashboard-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: var(--text-main);
+}
+
+.dashboard-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.dashboard-card button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--neon-cyan);
+    background: rgba(0, 242, 254, 0.05);
+    color: var(--neon-cyan);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dashboard-card button:hover {
+    background: var(--neon-cyan);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+.listings-section {
+    margin-top: 50px;
+}
+
+.listings-section h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+    color: var(--neon-green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.crop-list,
+.orders-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.crop-card,
+.order-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.crop-card:hover,
+.order-card:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.15);
+}
+
+.crop-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.crop-card h3,
+.order-card h3 {
+    color: var(--text-main);
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.crop-info,
+.order-info {
+    margin: 8px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.crop-info strong,
+.order-info strong {
+    color: var(--text-main);
+}
+
+.quality {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(0, 255, 135, 0.05);
+    border: 1px solid rgba(0, 255, 135, 0.3);
+    border-radius: 8px;
+    color: var(--neon-green);
+}
+
+.location {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: var(--text-muted);
+}
+
+.buy-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--neon-green), #059669);
+    color: #022c22;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buy-btn:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.4);
+    transform: translateY(-2px);
+}
+
+.loading,
+.no-crops,
+.no-orders {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+}
+
+.error-message {
+    text-align: center;
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.order-status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(0, 255, 135, 0.1);
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.payment-box {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.payment-paid {
+    color: var(--neon-green);
+    font-weight: bold;
+}
+
+.payment-unpaid {
+    color: #fb923c;
+    font-weight: bold;
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 8, 15, 0.8);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #0f172a;
+    border: 1px solid var(--neon-cyan);
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+    color: var(--text-main);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--neon-cyan);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--text-main);
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+}
+
+.form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.send-request-btn,
+.cancel-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.send-request-btn {
+    background: var(--neon-green);
+    color: #022c22;
+}
+
+.cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+}
+
+.send-request-btn:hover {
+    box-shadow: 0 0 15px rgba(0, 255, 135, 0.4);
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.request-status {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* =========================================
+   AI CHAT ASSISTANT
+========================================= */
+
+.chat-floating-button {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+    color: #022c22;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    z-index: 2000;
+    transition: all 0.3s ease;
+}
+
+.chat-floating-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+}
+
+.chat-assistant {
+    display: none;
+    position: fixed;
+    right: 25px;
+    bottom: 95px;
+    width: 350px;
+    height: 500px;
+    background: #0f172a;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 1999;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.chat-header {
+    background: rgba(16, 24, 39, 0.9);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--neon-cyan);
+    padding: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header button {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.chat-header button:hover {
+    color: var(--text-main);
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: rgba(10, 14, 23, 0.5);
+}
+
+.bot-message,
+.user-message {
+    max-width: 80%;
+    padding: 10px 13px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+.bot-message {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+    margin-right: auto;
+}
+
+.user-message {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(0, 255, 135, 0.2));
+    border: 1px solid var(--neon-cyan);
+    color: #ffffff;
+    margin-left: auto;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    background: #0f172a;
+    gap: 8px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 11px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    outline: none;
+    color: var(--text-main);
+}
+
+.chat-input-area input:focus {
+    border-color: var(--neon-cyan);
+}
+
+.chat-input-area button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background: var(--neon-cyan);
+    color: #022c22;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chat-input-area button:hover {
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+@media (max-width: 500px) {
+    .chat-assistant {
+        right: 10px;
+        bottom: 85px;
+        width: calc(100% - 20px);
+        height: 500px;
+    }
+
+    .chat-floating-button {
+        right: 15px;
+        bottom: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+    🌱 Khet2Deal
+</div>
+
+<div class="user-info">
+<span>
+    🛒 Buyer
+</span>
+<button onclick="logout()">
+    Logout
+</button>
+</div>
+</header>
+
+<main class="dashboard">
+
+<div class="dashboard-title">
+<h1>
+    Buyer Dashboard
+</h1>
+<p>
+    Find quality crops directly from farmers.
+</p>
+</div>
+
+<section class="dashboard-grid">
+
+<div class="dashboard-card">
+<div class="card-icon">🔎</div>
+<h2>Find Crops</h2>
+<p>Browse available crops from farmers.</p>
+<button onclick="scrollToListings()">
+    Browse Crops
+</button>
+</div>
+
+<div class="dashboard-card">
+<div class="card-icon">🌾</div>
+<h2>Crop Listings</h2>
+<p>View available farmer listings.</p>
+<button onclick="scrollToListings()">
+    View Listings
+</button>
+</div>
+
+<div class="dashboard-card">
+<div class="card-icon">⭐</div>
+<h2>Recommended Crops</h2>
+<p>Find suitable crops for your needs.</p>
+<button onclick="showMessage('Recommendations will be connected next.')">
+    View Recommendations
+</button>
+</div>
+
+<div class="dashboard-card">
+<div class="card-icon">📦</div>
+<h2>My Orders</h2>
+<p>View your confirmed crop orders.</p>
+<button onclick="scrollToOrders()">
+    View Orders
+</button>
+</div>
+
+<div class="dashboard-card">
+<div class="card-icon">💳</div>
+<h2>Payments</h2>
+<p>View payment information for your orders.</p>
+<button onclick="scrollToPayments()">
+    View Payments
+</button>
+</div>
+
+<div class="dashboard-card">
+<div class="card-icon">💬</div>
+<h2>Messages</h2>
+<p>Contact farmers directly.</p>
+<button onclick="toggleChat()">
+    Open Chat
+</button>
+</div>
+
+</section>
+
+<!-- AVAILABLE CROPS -->
+<section class="listings-section" id="cropListingsSection">
+<h2>
+    🌾 Available Crops
+</h2>
+<div id="cropList" class="crop-list">
+<div class="loading">
+    Loading available crops...
+</div>
+</div>
+</section>
+
+<!-- MY ORDERS -->
+<section class="listings-section" id="ordersSection">
+<h2>
+    📦 My Orders
+</h2>
+<div id="ordersList" class="orders-list">
+<div class="loading">
+    Loading orders...
+</div>
+</div>
+</section>
+
+<!-- PAYMENTS -->
+<section class="listings-section" id="paymentsSection">
+<h2>
+    💳 My Payments
+</h2>
+<div id="paymentsList" class="orders-list">
+<div class="loading">
+    Loading payments...
+</div>
+</div>
+</section>
+
+</main>
+
+<!-- BUY REQUEST MODAL -->
+<div id="buyRequestModal" class="modal">
+<div class="modal-content">
+<h2>
+    🛒 Send Buy Request
+</h2>
+<p id="requestCropName"></p>
+
+<form id="buyRequestForm" onsubmit="submitBuyRequest(event)">
+<div class="form-group">
+<label>
+    Requested Quantity
+</label>
+<input type="number" id="requestedQuantity" min="0.01" step="0.01" required placeholder="Example: 5">
+</div>
+
+<div class="form-group">
+<label>
+    Offered Price (₹/kg)
+</label>
+<input type="number" id="offeredPrice" min="0" step="0.01" placeholder="Example: 32">
+</div>
+
+<div class="form-group">
+<label>
+    Message
+</label>
+<textarea id="requestMessage" placeholder="Write a message to the farmer..."></textarea>
+</div>
+
+<div id="requestStatus" class="request-status"></div>
+
+<div class="modal-buttons">
+<button type="button" class="cancel-btn" onclick="closeBuyRequest()">
+    Cancel
+</button>
+<button type="submit" class="send-request-btn">
+    Send Request
+</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- AI CHAT ASSISTANT -->
+<div id="chatAssistant" class="chat-assistant">
+<div class="chat-header">
+<span>
+    🤖 Khet2Deal AI Assistant
+</span>
+<button onclick="toggleChat()">
+    ×
+</button>
+</div>
+
+<div id="chatMessages" class="chat-messages">
+<div class="bot-message">
+    Hello! 👋 I am Khet2Deal AI Assistant.
+    <br><br>
+    I can help you with:
+    <br>• Crop Quality
+    <br>• Price Prediction
+    <br>• Demand Forecasting
+    <br>• Finding the Best Buyer
+    <br>• Orders & Payments
+</div>
+</div>
+
+<div class="chat-input-area">
+<input type="text" id="chatInput" placeholder="Ask something..." onkeydown="if(event.key === 'Enter') sendChatMessage()">
+<button onclick="sendChatMessage()">
+    Send
+</button>
+</div>
+</div>
+
+<button class="chat-floating-button" onclick="toggleChat()" title="Open AI Assistant">
+    🤖
+</button>
+
+<script>
+const API_URL = "http://localhost:5000";
+const currentUser = JSON.parse(localStorage.getItem("user"));
+let selectedListingId = null;
+
+async function loadAvailableCrops() {
+    const cropList = document.getElementById("cropList");
+    try {
+        const response = await fetch(`${API_URL}/api/listings/available`);
+        if (!response.ok) throw new Error("Failed to load crop listings");
+        const crops = await response.json();
+
+        if (!crops || crops.length === 0) {
+            cropList.innerHTML = `
+                <div class="no-crops">
+                    <h3>🌱 No crops available</h3>
+                    <p>Farmers have not listed any crops yet.</p>
+                </div>
+            `;
+            return;
+        }
+
+        cropList.innerHTML = "";
+        crops.forEach((crop) => {
+            let imageHTML = crop.image_url ? 
+                `<img src="${API_URL}${crop.image_url}" alt="${crop.crop_name}">` : 
+                `<div style="height:180px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);border-radius:10px;font-size:50px;">🌱</div>`;
+
+            let qualityHTML = (crop.quality_score !== null && crop.quality_score !== undefined) ? `
+                <div class="quality">
+                    <strong>🤖 AI Crop Quality</strong><br>
+                    ${Number(crop.quality_score).toFixed(2)}% - ${crop.grade || "N/A"}
+                </div>
+            ` : "";
+
+            const price = (crop.expected_price !== null && crop.expected_price !== undefined) 
+                ? `₹${Number(crop.expected_price).toFixed(2)}/${crop.unit}` 
+                : "Price not specified";
+
+            const location = [crop.district, crop.state].filter(Boolean).join(", ");
+            const farmName = crop.farm_name || "Farmer";
+
+            cropList.innerHTML += `
+                <div class="crop-card">
+                    ${imageHTML}
+                    <h3>🌱 ${crop.crop_name}</h3>
+                    <div class="crop-info">👨‍🌾 <strong>${farmName}</strong></div>
+                    <div class="crop-info">📦 <strong>Quantity:</strong> ${crop.quantity} ${crop.unit}</div>
+                    <div class="crop-info">💰 <strong>Expected Price:</strong> ${price}</div>
+                    <div class="crop-info">📅 <strong>Harvest Date:</strong> ${formatDate(crop.harvest_date)}</div>
+                    ${qualityHTML}
+                    <div class="location">📍 <strong>Location:</strong> ${location || "Not specified"}</div>
+                    ${crop.description ? `<div class="crop-info">📝 <strong>Description:</strong> ${crop.description}</div>` : ""}
+                    <button class="buy-btn" onclick="sendBuyRequest(${crop.listing_id}, '${String(crop.crop_name).replace(/'/g, "\\'")}')">
+                        🛒 Send Buy Request
+                    </button>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Load crops error:", error);
+        cropList.innerHTML = `
+            <div class="error-message">
+                ❌ Unable to load available crops.<br><br>
+                Make sure the backend server is running.
+            </div>
+        `;
+    }
+}
+
+async function loadMyOrders() {
+    const ordersList = document.getElementById("ordersList");
+    if (!currentUser || !currentUser.buyer_id) {
+        ordersList.innerHTML = `<div class="error-message">Buyer information not found. Please login again.</div>`;
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/api/orders/buyer/${currentUser.buyer_id}`);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Failed to load orders");
+
+        const orders = data.orders || [];
+        if (orders.length === 0) {
+            ordersList.innerHTML = `
+                <div class="no-orders">
+                    <h3>📦 No orders yet</h3>
+                    <p>Your confirmed orders will appear here.</p>
+                </div>
+            `;
+            return;
+        }
+
+        ordersList.innerHTML = "";
+        orders.forEach((order) => {
+            const paymentHTML = order.payment_status ? `
+                <div class="payment-box">
+                    💳 <strong>Payment:</strong> 
+                    <span class="payment-paid">${order.payment_status.toUpperCase()}</span><br>
+                    Method: ${order.payment_method || "N/A"}
+                </div>
+            ` : `
+                <div class="payment-box">
+                    💳 <strong>Payment:</strong> 
+                    <span class="payment-unpaid">NOT PAID</span>
+                </div>
+            `;
+
+            ordersList.innerHTML += `
+                <div class="order-card">
+                    <h3>🌱 ${order.crop_name}</h3>
+                    <div class="order-info">📦 <strong>Quantity:</strong> ${Number(order.quantity).toFixed(2)} kg</div>
+                    <div class="order-info">💰 <strong>Agreed Price:</strong> ₹${Number(order.agreed_price).toFixed(2)}/kg</div>
+                    <div class="order-info">💵 <strong>Total Amount:</strong> ₹${Number(order.total_amount).toFixed(2)}</div>
+                    <div class="order-info">👨‍🌾 <strong>Farmer:</strong> ${order.farmer_name || order.farm_name || "Farmer"}</div>
+                    <div class="order-info">📞 <strong>Phone:</strong> ${order.farmer_phone || "N/A"}</div>
+                    <div class="order-info">📅 <strong>Order Date:</strong> ${formatDate(order.order_date)}</div>
+                    <span class="order-status">${order.status}</span>
+                    ${paymentHTML}
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Load orders error:", error);
+        ordersList.innerHTML = `<div class="error-message">❌ Unable to load orders.<br><br>${error.message}</div>`;
+    }
+}
+
+async function loadMyPayments() {
+    const paymentsList = document.getElementById("paymentsList");
+    if (!currentUser || !currentUser.buyer_id) {
+        paymentsList.innerHTML = `<div class="error-message">Buyer information not found.</div>`;
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/api/orders/buyer/${currentUser.buyer_id}`);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Failed to load payments");
+
+        const orders = data.orders || [];
+        const paidOrders = orders.filter(order => order.payment_id);
+
+        if (paidOrders.length === 0) {
+            paymentsList.innerHTML = `
+                <div class="no-orders">
+                    <h3>💳 No payments yet</h3>
+                    <p>Your payment information will appear here.</p>
+                </div>
+            `;
+            return;
+        }
+
+        paymentsList.innerHTML = "";
+        paidOrders.forEach((order) => {
+            paymentsList.innerHTML += `
+                <div class="order-card">
+                    <h3>💳 Payment #${order.payment_id}</h3>
+                    <div class="order-info">🌱 <strong>Crop:</strong> ${order.crop_name}</div>
+                    <div class="order-info">💵 <strong>Amount:</strong> ₹${Number(order.total_amount).toFixed(2)}</div>
+                    <div class="order-info">📦 <strong>Quantity:</strong> ${Number(order.quantity).toFixed(2)} kg</div>
+                    <div class="order-info">💳 <strong>Method:</strong> ${order.payment_method || "N/A"}</div>
+                    <div class="order-info">🧾 <strong>Transaction ID:</strong> ${order.transaction_id || "N/A"}</div>
+                    <div class="order-info">📅 <strong>Payment Date:</strong> ${formatDate(order.payment_date)}</div>
+                    <div class="payment-box">
+                        <span class="payment-paid">✅ ${order.payment_status.toUpperCase()}</span>
+                    </div>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Load payments error:", error);
+        paymentsList.innerHTML = `<div class="error-message">❌ Unable to load payments.<br><br>${error.message}</div>`;
+    }
+}
+
+function sendBuyRequest(listingId, cropName) {
+    if (!currentUser || !currentUser.buyer_id) {
+        alert("Buyer information not found. Please login again.");
+        return;
+    }
+    selectedListingId = listingId;
+    document.getElementById("requestCropName").innerHTML = `🌱 Crop: <strong>${cropName}</strong>`;
+    document.getElementById("requestedQuantity").value = "";
+    document.getElementById("offeredPrice").value = "";
+    document.getElementById("requestMessage").value = "";
+    document.getElementById("requestStatus").innerHTML = "";
+    document.getElementById("buyRequestModal").style.display = "flex";
+}
+
+async function submitBuyRequest(event) {
+    event.preventDefault();
+    if (!selectedListingId) {
+        alert("No crop listing selected.");
+        return;
+    }
+    if (!currentUser || !currentUser.buyer_id) {
+        alert("Buyer information not found. Please login again.");
+        return;
+    }
+
+    const requestedQuantity = Number(document.getElementById("requestedQuantity").value);
+    const offeredPriceInput = document.getElementById("offeredPrice").value;
+    const offeredPrice = offeredPriceInput === "" ? null : Number(offeredPriceInput);
+    const message = document.getElementById("requestMessage").value.trim();
+
+    if (!requestedQuantity || requestedQuantity <= 0) {
+        alert("Please enter a valid requested quantity.");
+        return;
+    }
+    if (offeredPrice !== null && offeredPrice < 0) {
+        alert("Offered price cannot be negative.");
+        return;
+    }
+
+    const requestStatus = document.getElementById("requestStatus");
+    requestStatus.innerHTML = "Sending request... ⏳";
+
+    try {
+        const response = await fetch(`${API_URL}/api/buy-requests`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                listing_id: selectedListingId,
+                buyer_id: currentUser.buyer_id,
+                requested_quantity: requestedQuantity,
+                offered_price: offeredPrice,
+                message: message || null
+            })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Failed to send buy request");
+
+        requestStatus.innerHTML = "✅ Buy request sent successfully!";
+        alert("✅ Buy request sent successfully!\n\nRequest ID: " + data.request_id);
+        setTimeout(() => { closeBuyRequest(); }, 800);
+    } catch (error) {
+        console.error("Buy request error:", error);
+        requestStatus.innerHTML = "❌ " + error.message;
+    }
+}
+
+function closeBuyRequest() {
+    document.getElementById("buyRequestModal").style.display = "none";
+    selectedListingId = null;
+}
+
+function scrollToListings() {
+    document.getElementById("cropListingsSection").scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToOrders() {
+    document.getElementById("ordersSection").scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToPayments() {
+    document.getElementById("paymentsSection").scrollIntoView({ behavior: "smooth" });
+}
+
+function formatDate(dateValue) {
+    if (!dateValue) return "Not specified";
+    const date = new Date(dateValue);
+    if (isNaN(date.getTime())) return dateValue;
+    return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+function showMessage(message) {
+    alert(message);
+}
+
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+}
+
+function toggleChat() {
+    const chat = document.getElementById("chatAssistant");
+    if (chat.style.display === "none" || chat.style.display === "") {
+        chat.style.display = "flex";
+        setTimeout(() => { document.getElementById("chatInput").focus(); }, 100);
+    } else {
+        chat.style.display = "none";
+    }
+}
+
+async function sendChatMessage() {
+    const input = document.getElementById("chatInput");
+    const messages = document.getElementById("chatMessages");
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    messages.innerHTML += `<div class="user-message">${escapeHTML(message)}</div>`;
+    input.value = "";
+
+    const loadingMessage = document.createElement("div");
+    loadingMessage.className = "bot-message";
+    loadingMessage.innerHTML = "Thinking... ⏳";
+    messages.appendChild(loadingMessage);
+    messages.scrollTop = messages.scrollHeight;
+
+    try {
+        const response = await fetch(`${API_URL}/api/chat-assistant`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: message })
+        });
+
+        const data = await response.json();
+        loadingMessage.remove();
+
+        if (!response.ok) throw new Error(data.error || "Chat Assistant failed");
+
+        messages.innerHTML += `<div class="bot-message">${escapeHTML(data.reply || "Sorry, I could not understand that.")}</div>`;
+        messages.scrollTop = messages.scrollHeight;
+    } catch (error) {
+        console.error("Chat Assistant Error:", error);
+        loadingMessage.remove();
+        messages.innerHTML += `<div class="bot-message">❌ Unable to connect to Khet2Deal AI Assistant.</div>`;
+        messages.scrollTop = messages.scrollHeight;
+    }
+}
+
+function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadAvailableCrops();
+    loadMyOrders();
+    loadMyPayments();
+});
+</script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@ const axios = require("axios");
 // =====================================================
 
 const AI_API_URL =
-    "https://inkjet-joining-order-adipex.trycloudflare.com";
+    "https://khet2deal-ai.onrender.com";
 
 
 // =====================================================

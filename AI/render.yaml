@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: khet2deal-ai
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python ai_api.py

@@ -10,15 +10,15 @@ app = Flask(__name__)
 CORS(app)
 
 quality_model = tf.keras.models.load_model(
-    "/content/AI_Models/crop_quality_model.keras"
+    "crop_quality_model.keras"
 )
 
 price_model = joblib.load(
-    "/content/AI_Models/tomato_price_model.pkl"
+    "tomato_price_model.pkl"
 )
 
 demand_rules = joblib.load(
-    "/content/AI_Models/demand_rules.pkl"
+    "demand_rules.pkl"
 )
 
 print("All models loaded ✅")
